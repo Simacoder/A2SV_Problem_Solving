@@ -1,26 +1,25 @@
-# chatloop 
+# Chatloop
 import sys
-input = sys.stdin.readline
 from bisect import bisect_left
 
-t = int(input())
+input = sys.stdin.readline
 
+t = int(input())
 for _ in range(t):
     n = int(input())
-    a = map(int, input().split())
-    b = map(int, input().split())
+    a = list(map(int, input().split()))
+    b = list(map(int, input().split()))
 
-    position = {}
-    for i , x in enumerate(b):
-        position[x] = i
-    
-    seq = [position[x] for x in a]
-    
+    pos = {x: i for i, x in enumerate(b)}
+    seq = [pos[x] for x in a]
+
     tails = []
-    for val in seq:
-        index = bisect_left(tails, val)
-        if index == len(tails):
-            tails.append(val)
+    for x in seq:
+        idx = bisect_left(tails, x)
+        if idx == len(tails):
+            tails.append(x)
         else:
-            tails[index] = val
+            tails[idx] = x
+
     print(n - len(tails))
+    sys.stdout.flush()
