@@ -7,7 +7,6 @@ t = int(input())
 for _ in range(t):
     n = int(input())
     s = list(map(int, input().split()))
-    
 
     p = [0] * n
     possible = True
@@ -20,13 +19,15 @@ for _ in range(t):
 
         if j - i == 1:
             possible = False
-            break 
+            break
 
-        for k in range(i, j - 1):
-            p[k] = k + 2
-        p[j - 1] = i + 1
+        
+        p[i] = j
+        for k in range(i + 1, j):
+            p[k] = k
+
         i = j
-    
+
     if not possible:
         print(-1)
     else:

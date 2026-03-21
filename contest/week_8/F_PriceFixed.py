@@ -1,31 +1,32 @@
 # Prize fixed?
 import sys
-input = sys.stdin.readline
 
-n = int(input())
-items = []
+data = list(map(int, sys.stdin.buffer.read().split()))
+n = data[0]
 
-for _ in range(n):
-    a, b = map(int, input().split())
-    items.append([a, b])
 
-items.sort(key=lambda x: x[1])
+items = sorted(zip(data[2::2], data[1::2]))  
+b_arr = [x[0] for x in items]
+a_arr = [x[1] for x in items]
 
-left, right =0, n - 1
-bought = 0
+l, r = 0, n - 1
+total = 0
 cost = 0
 
-while left <= right:
-    if bought >= items[left][1]:
-        cost += items[left][0]
-        bought += items[left][0]
-        left += 1
+while l <= r:
+    if total >= b_arr[l]:
+        cost += a_arr[l]
+        total += a_arr[l]
+        l += 1
     else:
-        need = min(items[right][0], items[left][1] - bought)
+        need = min(b_arr[l] - total, a_arr[r] if l != r else a_arr[l])
         cost += need * 2
-        bought += need
-        items[right][0] -= need
+        total += need
+        if l == r:
+            a_arr[l] -= need
+        else:
+            a_arr[r] -= need
+            if a_arr[r] == 0:
+                r -= 1
 
-        if items[right][0] == 0:
-            right -= 1
-    print(cost)
+print(cost)
