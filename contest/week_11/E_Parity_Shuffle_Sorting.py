@@ -11,7 +11,7 @@ def solve():
     if n == 1:
         print(0)
         return 
-    ops = []
+    # ops = []
 
     ops.append((1, n))
     if (a[0] + a[n - 1]) % 2 == 0:
